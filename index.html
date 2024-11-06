@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reaction Time Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        .bubble {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: #3498db;
+            position: absolute;
+            cursor: pointer;
+        }
+        #startButton {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Reaction Time Test</h1>
+    <p>Click the bubble as soon as it appears to test your reaction time!</p>
+    <button id="startButton" onclick="startGame()">Start</button>
+    <div id="bubble" class="bubble" onclick="recordReactionTime()" style="display: none;"></div>
+    <p id="result"></p>
+
+    <script>
+        let startTime;
+
+        function startGame() {
+            document.getElementById('startButton').style.display = 'none';
+            document.getElementById('result').innerText = "";
+            setTimeout(showBubble, Math.random() * 2000 + 1000); // Show bubble after 1-3 seconds
+        }
+
+        function showBubble() {
+            const bubble = document.getElementById('bubble');
+            // Randomize bubble position
+            bubble.style.top = Math.random() * (window.innerHeight - 50) + 'px';
+            bubble.style.left = Math.random() * (window.innerWidth - 50) + 'px';
+            bubble.style.display = 'block';
+            startTime = new Date().getTime();
+        }
+
+        function recordReactionTime() {
+            const endTime = new Date().getTime();
+            const reactionTime = endTime - startTime;
+            document.getElementById('result').innerText = `Your reaction time is ${reactionTime} ms`;
+            document.getElementById('bubble').style.display = 'none';
+            setTimeout(showBubble, Math.random() * 2000 + 1000); // Show bubble again after 1-3 seconds
+        }
+    </script>
+</body>
+</html>
